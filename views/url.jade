@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  form#formUrl(name="urltest" ,method="post", action="/shortenerurl")
+    input#inputLongUrl(type="text", size="50", placeholder="Ingrese una URL larga", name="longurl", value= posturl)
+    br
+    button#btnSubmit(type="submit") Generar mini URL
+    h2#resultshortURL= result
+
+  input#inputShortUrl(type="text", size="50", placeholder="Ingrese una mini URL y presione enter para buscar", name="shorturl", label="blabl")
+  br
+  h2#resultLongURL
+
+  script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+  script(src="/javascripts/url.js")

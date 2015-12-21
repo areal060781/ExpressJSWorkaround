@@ -1,16 +1,15 @@
 var express = require('express');
 var router = express.Router();
-//var TinyURL = require('tinyurl');
 var request = require('request');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Express'});
 });
 
 /* Classic Hello world */
 router.get('/helloworld', function(req, res) {
-  res.render('helloworld', { title: 'Hello world!' });
+  res.render('helloworld', { title: 'Hello world!'});
 });
 
 /*GET UserList page*/
@@ -56,10 +55,6 @@ router.post('/adduser', function(req, res){
   });
 });
 
-/*TinyURL.shorten('http://google.com', function(res){
-  console.log(res);
-});*/
-
 /*AJAX search form*/
 router.get('/search', function(req, res){
   res.render('search');
@@ -87,6 +82,29 @@ request(url, function(err, resp, body){
 
   //testing the route
   //res.send("WHEEE");
+});
+
+router.get('/url', function(req, res){
+  res.render('url', {title: 'Shortener URL', result:'', posturl:''});
+});
+
+router.post('/shortenerurl', function(req, res){
+  var longURL = req.body.longurl;
+
+  request('http://tinyurl.com/api-create.php?url=' + longURL, function (error, response, body) {
+    //cb(body.split("\n")[0]);
+    //body = JSON.stringify(body);
+    res.render('url', {title: 'Shortener URL', result: body, posturl:longURL});
+  });
+});
+
+router.get('/searchinglongurl', function(req, res){
+  var shortenUrl = req.query.search;
+
+  request('http://api.unshort.tk/index.php?u=' + shortenUrl, function(error, response, body){
+    body = JSON.parse(body);    
+    res.send(body[shortenUrl]);
+  });
 });
 
 module.exports = router;
