@@ -13,6 +13,9 @@ var db = monk('localhost:27017/myapp');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+//var test1 = require('./routes/test1');
+var birds = require('./birds');
+
 var app = express();
 
 // view engine setup
@@ -35,6 +38,8 @@ app.use(function(req, res, next){
 
 app.use('/', routes);
 app.use('/users', users);
+//app.use('/test1', test1);
+app.use('/birds', birds);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
