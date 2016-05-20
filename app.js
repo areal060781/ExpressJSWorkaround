@@ -8,11 +8,12 @@ var bodyParser = require('body-parser');
 // Aida's code
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/myfisrtexpressapp');
+var db = monk('localhost:27017/myapp');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var birds = require('./routes/birds');
+var test1 = require('./routes/test1');
 
 var app = express();
 
@@ -28,15 +29,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Make our db accesible to our router
+app.use(function(req, res, next){
+    req.db = db;
+    next();
+});
+
 app.use('/', routes);
 app.use('/users', users);
 app.use('/birds', birds);
+app.use('/test1', test1);
 
-//Make our db accesible to our router
-app.use(function(req, res, next){
-  req.db = db;
-  next();
-});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

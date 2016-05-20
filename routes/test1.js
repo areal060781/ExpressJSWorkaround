@@ -1,10 +1,15 @@
 var express = require('express');
 var router = express.Router();
+
 var request = require('request');
+
+router.get('/', function(req, res) {
+    res.send('Test1 home page');
+});
 
 /* Classic Hello world */
 router.get('/helloworld', function(req, res) {
-    res.render('helloworld', { title: 'Hello world!'});
+    res.render('test1/helloworld', { title: 'Hello world!'});
 });
 
 /*GET UserList page*/
